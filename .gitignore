@@ -1,0 +1,47 @@
+# ---- Local environment / private credentials ----
+.env
+.env.*
+!.env.example
+includes/db.local.php
+config.local.php
+*.key
+*.pem
+
+# ---- Logs ----
+*.log
+logs/
+error_log
+php_errors.log
+
+# ---- Temporary / cache files ----
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+cache/
+tmp/
+
+# ---- Dependencies (if added later) ----
+/vendor/
+node_modules/
+
+# ---- Uploaded or generated files ----
+uploads/
+
+# ---- Editor files ----
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ---- Operating system files ----
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Keep empty media folders in Git
+!assets/images/.gitkeep
+!assets/videos/.gitkeep
