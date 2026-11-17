@@ -51,6 +51,7 @@ $activePage = $activePage ?? '';
                 <?php endforeach; ?>
             </ul>
         </nav>
+        <a class="admin-login-link" href="<?= e($basePath) ?>admin/index.php">Admin Login</a>
     </div>
     <div class="border-ornament" aria-hidden="true"></div>
 </header>

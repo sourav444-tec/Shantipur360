@@ -432,3 +432,7 @@ textarea.form-control { min-height: 150px; resize: vertical; }
     .topbar, .site-header, .site-footer, .nav-toggle, .skip-link { display: none; }
     body { background: #fff; }
 }
+/* Santipur360 directory, admin entry and responsive map additions */
+.admin-login-link{font-size:.78rem;white-space:nowrap;padding:.45rem .7rem;border:1px solid rgba(255,255,255,.35);border-radius:7px;color:inherit;text-decoration:none}
+.info-card img{width:100%;height:180px;object-fit:cover;border-radius:10px;margin-bottom:.8rem}
+@media(max-width:900px){.admin-login-link{margin:.5rem 1rem}}

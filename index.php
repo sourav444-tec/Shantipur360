@@ -14,6 +14,15 @@ $metaDescription = 'শান্তিপুরের রাস মহোৎস�
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/navbar.php';
 
+$uploadedGallery = [];
+try {
+    require_once __DIR__ . '/includes/db.php';
+    $uploadedGallery = getDatabaseConnection()->query('SELECT title,caption,image FROM gallery ORDER BY created_at DESC')->fetchAll();
+} catch (Throwable $exception) {
+    error_log('[Santipur360] Gallery unavailable: ' . $exception->getMessage());
+}
+
+
 /**
  * Shows an image if the file exists in assets/images/, otherwise a clearly
  * labelled placeholder telling you which file to add.
@@ -44,17 +53,17 @@ $quickCards = [
 
 /* Festival highlights strip: bengali caption, image file, placeholder hint */
 $highlights = [
-    ['ঐতিহাসিক আলো',        'highlight-heritage.jpg', 'Heritage temple / house lit up at night'],
-    ['ফানুসের মেলা',         'highlight-fanush.jpg',   'Fanush (lanterns) in the night sky'],
-    ['থিম প্যান্ডেলের সৌন্দর্য', 'highlight-pandal.jpg',   'Theme pandal decoration'],
-    ['ভক্তদের ঢল',           'highlight-crowd.jpg',    'Devotees gathering during the festival'],
+    ['ঐতিহাসিক আলো',        'rash-03.jpg', 'Heritage temple / house lit up at night'],
+    ['ফানুসের মেলা',         'rash-04.jpg',   'Fanush (lanterns) in the night sky'],
+    ['থিম প্যান্ডেলের সৌন্দর্য', 'rash-05.jpg',   'Theme pandal decoration'],
+    ['ভক্তদের ঢল',           'rash-06.jpg',    'Devotees gathering during the festival'],
 ];
 
 /* Three special attractions (names only – facts to be added after verification) */
 $attractions = [
-    ['রায় রাজার ইতিহাস', 'History of Ray Raja', 'attraction-ray-raja.jpg'],
-    ['ফানুস',              'Fanush',               'attraction-fanush.jpg'],
-    ['কুঞ্জভঙ্গ',           'Kunjabhang',           'attraction-kunjabhang.jpg'],
+    ['রায় রাজার ইতিহাস', 'History of Ray Raja', 'rash-03.jpg'],
+    ['ফানুস',              'Fanush',               'rash-04.jpg'],
+    ['কুঞ্জভঙ্গ',           'Kunjabhang',           'rash-05.jpg'],
 ];
 
 /* Administrative roles (names/messages must be supplied by the administration) */
@@ -82,7 +91,7 @@ $officials = [
         <div class="hero__media">
             <?= imageOrPlaceholder(
                 $basePath,
-                'hero-festival.png',
+                'rash-01.jpg',
                 'Festival hero illustration',
                 'Place the main festival artwork or photograph here (transparent PNG works best).'
             ) ?>
@@ -113,7 +122,7 @@ $officials = [
         <div class="split__media">
             <?= imageOrPlaceholder(
                 $basePath,
-                'intro-temple.jpg',
+                'rash-02.jpg',
                 'Illuminated temple during Santipur Rash',
                 'Photograph of an illuminated temple or heritage building in Santipur.'
             ) ?>
@@ -316,5 +325,14 @@ $officials = [
 
     </div>
 </section>
+
+
+<?php if ($uploadedGallery): ?>
+<section class="section section--alt" aria-labelledby="community-gallery">
+ <div class="container"><div class="section-title"><h2 id="community-gallery">উৎসবের আলোকচিত্র</h2><p class="section-title__en">Festival Photo Gallery</p></div>
+  <div class="gallery"><?php foreach ($uploadedGallery as $photo): ?><figure class="gallery__item"><img src="<?= e($photo['image']) ?>" alt="<?= e($photo['title']) ?>" loading="lazy"><figcaption><?= e($photo['caption'] ?: $photo['title']) ?></figcaption></figure><?php endforeach; ?></div>
+ </div>
+</section>
+<?php endif; ?>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

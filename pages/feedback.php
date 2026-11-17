@@ -105,6 +105,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':rating'       => $ratingValue,
                 ':message'      => $old['message'],
             ]);
+            $feedbackId = (int) $pdo->lastInsertId();
+            $files = $_FILES['feedback_photos'] ?? null;
+            if ($files && isset($files['name']) && is_array($files['name'])) {
+                $selected = array_filter($files['name'], static fn($name) => $name !== '');
+                if (count($selected) > 3) throw new RuntimeException('You can attach up to 3 images.');
+                foreach (array_keys($selected) as $i) {
+                    if (($files['error'][$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK || ($files['size'][$i] ?? 0) > 4 * 1024 * 1024) {
+                        throw new RuntimeException('Each attachment must be a valid image under 4 MB.');
+                    }
+                    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($files['tmp_name'][$i]);
+                    $extensions = ['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp'];
+                    if (!isset($extensions[$mime])) throw new RuntimeException('Attachments must be JPG, PNG or WEBP images.');
+                    $fileName = bin2hex(random_bytes(16)) . '.' . $extensions[$mime];
+                    $uploadDir = dirname(__DIR__) . '/uploads';
+                    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+                    if (!move_uploaded_file($files['tmp_name'][$i], $uploadDir . '/' . $fileName)) throw new RuntimeException('Could not save attachment.');
+                    $attachment = $pdo->prepare('INSERT INTO feedback_attachments (feedback_id,file_path) VALUES (?,?)');
+                    $attachment->execute([$feedbackId, 'uploads/' . $fileName]);
+                }
+            }
 
             $_SESSION['csrf_token']     = bin2hex(random_bytes(32)); // rotate
             $_SESSION['feedback_saved'] = true;
@@ -164,7 +184,7 @@ require __DIR__ . '/../includes/navbar.php';
                 </div>
             <?php endif; ?>
 
-            <form method="post" action="feedback.php" data-validate>
+            <form method="post" action="feedback.php" enctype="multipart/form-data" data-validate>
                 <input type="hidden" name="csrf_token" value="<?= e($_SESSION['csrf_token']) ?>">
 
                 <!-- Honeypot: leave empty. Hidden from people, visible to bots. -->
@@ -232,6 +252,12 @@ require __DIR__ . '/../includes/navbar.php';
                               <?= isset($errors['message']) ? 'aria-invalid="true"' : '' ?>><?= e($old['message']) ?></textarea>
                     <div class="char-count" aria-hidden="true"></div>
                     <span class="field-error"><?= e($errors['message'] ?? '') ?></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedback_photos">Photos / Screenshots (optional, up to 3 images)</label>
+                    <input class="form-control" type="file" id="feedback_photos" name="feedback_photos[]" accept="image/jpeg,image/png,image/webp" multiple>
+                    <p class="field-hint">JPG, PNG or WEBP; maximum 4 MB per image.</p>
                 </div>
 
                 <button type="submit" class="btn btn--maroon">Submit Feedback / জমা দিন <span aria-hidden="true">→</span></button>

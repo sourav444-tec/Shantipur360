@@ -15,8 +15,8 @@ require __DIR__ . '/../includes/navbar.php';
 
 /* id, Bengali title, English title, image file, video file */
 $attractions = [
-    ['ray-raja',    'রায় রাজার ইতিহাস', 'History of Ray Raja', 'attraction-ray-raja.jpg',    'ray-raja.mp4'],
-    ['fanush',      'ফানুস',              'Fanush',               'attraction-fanush.jpg',      'fanush.mp4'],
+    ['ray-raja',    'রায় রাজার ইতিহাস', 'History of Ray Raja', 'rash-03.jpg',    'ray-raja.mp4'],
+    ['fanush',      'ফানুস',              'Fanush',               'rash-04.jpg',      'fanush.mp4'],
     ['kunjabhang',  'কুঞ্জভঙ্গ',           'Kunjabhang',           'attraction-kunjabhang.jpg',  'kunjabhang.mp4'],
 ];
 ?>

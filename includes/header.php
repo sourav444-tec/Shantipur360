@@ -78,6 +78,7 @@ $navItems = [
     'route'          => ['Route Map',          'রুটম্যাপ',             'pages/route-map.php'],
     'emergency'      => ['Emergency Services', 'জরুরি পরিষেবা',        'pages/emergency.php'],
     'feedback'       => ['Feedback',           'মতামত',               'pages/feedback.php'],
+    'directory'      => ['Festival Directory', 'উৎসব ডিরেক্টরি',       'pages/directory.php'],
 ];
 ?>
 <!DOCTYPE html>
