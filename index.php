@@ -59,11 +59,14 @@ $highlights = [
     ['ভক্তদের ঢল',           'rash-06.jpg',    'Devotees gathering during the festival'],
 ];
 
-/* Three special attractions (names only – facts to be added after verification) */
+/* Three special attractions: Bengali title, English title, image file, short excerpt */
 $attractions = [
-    ['রায় রাজার ইতিহাস', 'History of Ray Raja', 'rash-03.jpg'],
-    ['ফানুস',              'Fanush',               'rash-04.jpg'],
-    ['কুঞ্জভঙ্গ',           'Kunjabhang',           'rash-05.jpg'],
+    ['রায় রাজার ইতিহাস', 'History of Ray Raja', 'rash-03.jpg',
+        'শান্তিপুরের রাসের সুচনা লগ্নে রাই রাজা বা রাধিকা রাজার প্রচলন ছিলো না। কোন এক সময় নবদ্বীপের শাক্ত রাস কে জনপ্রিয় করার জন্য নদীয়ার রাজ পরিবার শান্তিপুরে আগত ভক্তদের উপর তীর্থ কর অরোক করে।'],
+    ['ফানুস',              'Fanush',               'rash-04.jpg',
+        'শান্তিপুরের রাসযাত্রার ইতিহাসে বেলোয়ারি ফানুস এক অনন্য ঐতিহ্যের নাম। ইউরোপীয় কাচশিল্পের ছোঁয়ায় তৈরি রঙিন কাচের এই ফানুসগুলি কয়েক শতাব্দী ধরে শান্তিপুরের প্রাচীন বিগ্রহ বাড়িগুলির রাস উৎসবকে আলোকিত করে আসছে।'],
+    ['কুঞ্জভঙ্গ',           'Kunjabhang',           'rash-05.jpg',
+        'ভাঙারাসের নগর পরিক্রমা শেষে যুগল বিগ্রহের নিশি যাপনের পর রাস যাত্রার অন্তিম পর্যায় হিসেবে রাস কুঞ্জ ভঙ্গের সময় আগত হয়। বৈষ্ণবীয় পদকর্তারা ভাঙা রাসের নিশি কে "সুখো নিশি" বলে উল্লেখ করেছে।'],
 ];
 
 /* Administrative roles (names/messages must be supplied by the administration) */
@@ -168,7 +171,7 @@ $officials = [
 
         <h3 class="text-center mt-2">রাসের বিশেষত্ব <span lang="en">– Special Attractions</span></h3>
         <div class="grid grid--3 mt-1">
-            <?php foreach ($attractions as [$titleBn, $titleEn, $file]): ?>
+            <?php foreach ($attractions as [$titleBn, $titleEn, $file, $excerpt]): ?>
                 <article class="card">
                     <div class="card__media">
                         <?= imageOrPlaceholder($basePath, $file, $titleEn, 'Photograph or illustration for ' . $titleEn . '.') ?>
@@ -176,7 +179,7 @@ $officials = [
                     <div class="card__body">
                         <h4 class="card__title"><?= e($titleBn) ?></h4>
                         <p class="card__subtitle" lang="en"><?= e($titleEn) ?></p>
-                        <p>বিস্তারিত তথ্য যাচাইয়ের পর এখানে যোগ করা হবে।</p>
+                        <p><?= e($excerpt) ?></p>
                         <div class="card__footer">
                             <a class="btn btn--outline btn--small" href="pages/special-attractions.php">Read more <span aria-hidden="true">→</span></a>
                         </div>

@@ -23,7 +23,9 @@ $activePage = $activePage ?? '';
 <header class="site-header">
     <div class="container site-header__inner">
         <a class="brand" href="<?= e($basePath) ?>index.php" aria-label="Santipur Rash – Home">
-            <span class="brand__mark" aria-hidden="true">❀</span>
+            <img class="brand__logo"
+                 src="<?= e($basePath) ?>assets/images/20261108_021926.png"
+                 alt="Santipur Rash logo">
             <span class="brand__text">
                 <span class="brand__bn">শান্তিপুরের রাস</span>
                 <span class="brand__en">Santipur Rash</span>
